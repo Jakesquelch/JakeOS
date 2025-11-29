@@ -1,21 +1,37 @@
+.landing {
+  text-align: center;
+  padding: 50px;
+}
+
 .box-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 50px;
+  gap: 20px;
 }
 
 .box {
-  flex: 1;
+  flex: 1 1 200px;
   max-width: 200px;
   padding: 20px;
-  margin: 0 10px;
   background-color: #f0f0f0; /* faint background */
-  text-align: center;
+  border-radius: 12px;
   cursor: pointer;
-  border-radius: 10px;
   transition: transform 0.2s ease;
+  text-align: center;
 }
 
 .box:hover {
   transform: scale(1.05);
+}
+
+.box img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.box p {
+  margin: 0;
+  font-weight: bold;
 }
