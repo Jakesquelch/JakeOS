@@ -1,27 +1,23 @@
 <main class="landing">
-  <h1>Jake's OS</h1>
+    <div class="landing-container">
+        <h1>Jake's OS</h1>
 
-  <div class="box-row">
-    <a routerLink="/todo">
-      <div class="box">
-        <img src="assets/todo.png" alt="To-do List" />
-        <p>To-do List</p>
-      </div>
-    </a>
+        <div class="box-row">
+            <div class="box box-todo" [routerLink]="'/todo'">
+                <img src="assets/todo.png" alt="To-do List" />
+                <p>To-do List</p>
+            </div>
 
-    <a routerLink="/journal">
-      <div class="box">
-        <img src="assets/journal.png" alt="Journal" />
-        <p>Journal</p>
-      </div>
-    </a>
+            <div class="box box-journal" [routerLink]="'/journal'">
+                <img src="assets/journal.png" alt="Journal" />
+                <p>Journal</p>
+            </div>
 
-    <a routerLink="/habit">
-      <div class="box">
-        <img src="assets/habits.png" alt="Habit Tracker" />
-        <p>Habit Tracker</p>
-      </div>
-    </a>
-  </div>
+            <div class="box box-habit" [routerLink]="'/habit'">
+                <img src="assets/habits.png" alt="Habit Tracker" />
+                <p>Habit Tracker</p>
+            </div>
+        </div>
+    </div>
 </main>
 

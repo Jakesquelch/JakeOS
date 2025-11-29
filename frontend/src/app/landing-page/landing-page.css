@@ -1,37 +1,60 @@
 .landing {
-  text-align: center;
-  padding: 50px;
+    text-align: center;
+    padding: 100px;
+}
+
+.landing-container {
+    display: inline-block;   
+    padding: 100px;    
+    border: 5px solid;
+    border-image-slice: 1;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    border-image-source: linear-gradient(to right, #f8bcbc, #a3d4f8, #baf3c0);
+    border-width: 5px;
 }
 
 .box-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  gap: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    gap: 75px;
 }
 
 .box {
-  flex: 1 1 200px;
-  max-width: 200px;
-  padding: 20px;
-  background-color: #f0f0f0; /* faint background */
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  text-align: center;
+    flex: 1 1 200px;
+    max-width: 200px;
+    padding: 20px;
+    background-color: #701313; /* faint background */
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-align: center;
+}
+
+/* individual box colors */
+.box-todo {
+    background-color: #f8bcbc;; /* red */
+}
+
+.box-journal {
+    background-color: #a3d4f8; /* blue */
+}
+
+.box-habit {
+    background-color: #baf3c0; /* green */
 }
 
 .box:hover {
-  transform: scale(1.05);
+    transform: scale(1.25);
 }
 
 .box img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
 }
 
 .box p {
-  margin: 0;
-  font-weight: bold;
+    margin: 0;
+    font-weight: bold;
 }
