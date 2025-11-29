@@ -1,0 +1,21 @@
+.box-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.box {
+  flex: 1;
+  max-width: 200px;
+  padding: 20px;
+  margin: 0 10px;
+  background-color: #f0f0f0; /* faint background */
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.box:hover {
+  transform: scale(1.05);
+}
