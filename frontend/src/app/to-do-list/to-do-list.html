@@ -1,1 +1,43 @@
-<p>to-do-list works!</p>
+<main class="todo">
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+
+        <div class="add-task">
+            <input [(ngModel)]="newTaskTitle" placeholder="Task title" />
+            <input [(ngModel)]="newTaskGroup" placeholder="Group (optional)" />
+            <select [(ngModel)]="newTaskPriority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+            </select>
+            <button (click)="addTask()">Add Task</button>
+        </div>
+
+        <ul class="task-list">
+            <li *ngFor="let task of sortedTasks" [class.completed]="task.completed">
+                <input type="checkbox" [(ngModel)]="task.completed" />
+                
+                <span *ngIf="editingTaskId === task.id">
+                    <input [(ngModel)]="editTaskTitle" />
+                    <button (click)="saveTask(task)">Save</button>
+                    <button (click)="cancelEdit()">Cancel</button>
+                </span>
+
+                <span *ngIf="editingTaskId !== task.id">
+                    <strong *ngIf="task.group">[{{ task.group }}]</strong> {{ task.title }}
+                    <small 
+                        class="priority"
+                        [class.priority-low]="task.priority === 'low'"
+                        [class.priority-medium]="task.priority === 'medium'"
+                        [class.priority-high]="task.priority === 'high'"
+                    >
+                    {{ task.priority | titlecase }}
+                    </small>
+                    <button (click)="editTask(task)">Edit</button>
+                    <button (click)="deleteTask(task.id)">Delete</button>
+                </span>
+            </li>
+        </ul>
+    </div>
+</main>
+

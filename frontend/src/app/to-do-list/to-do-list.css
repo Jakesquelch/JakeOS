@@ -1,0 +1,98 @@
+.todo {
+    text-align: left;
+    padding: 50px;
+}
+
+.todo-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 100px;
+    border: 1px solid;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+.add-task {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.add-task input, .add-task select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #4caf50;
+}
+
+.add-task button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-list li {
+    display: flex;
+    font-size: 1.4rem;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.task-list li.completed span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.priority {
+    margin-left: auto;
+    margin-right: 12px;
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.priority-high { 
+    background-color: #f44336; color: #000000; 
+}
+
+.priority-medium { 
+    background-color: #ff9800; color: #000000; 
+}
+
+.priority-low {
+    background-color: #4caf50; color: #000000; 
+}
+
+.task-list button {
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+    min-width: 55px; 
+}
+
+.task-list button:hover {
+    background: #ccc;
+}
+
+.task-list input[type="checkbox"] {
+    transform: scale(1.4);
+    cursor: pointer;
+}
+
+.task-list button + button {
+    margin-left: 8px;
+}
