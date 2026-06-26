@@ -8,41 +8,12 @@ JakeOS is built as a modern single-page application (SPA) using Angular's standa
 
 ### Technology Stack
 
-- **Framework:** Angular 21.0.0
-- **Language:** TypeScript 5.9.2
+- **Framework:** Angular 21.0.1
+- **Language:** TypeScript 5.9.3
 - **Routing:** Angular Router (standalone)
 - **Forms:** Angular Forms Module (Template-driven)
 - **Testing:** Vitest 4.0.8
 - **Build System:** Angular CLI with esbuild
-
-### Application Structure
-
-```
-frontend/src/app/
-├── app.ts                    # Root component
-├── app.config.ts             # Application configuration
-├── app.routes.ts             # Route definitions
-├── models/
-│   └── task.model.ts         # Data models/interfaces
-├── landing-page/             # Landing page module
-│   ├── landing-page.ts
-│   ├── landing-page.html
-│   └── landing-page.css
-├── to-do-list/               # To-Do List module
-│   ├── to-do-list.ts
-│   ├── to-do-list.html
-│   └── to-do-list.css
-├── journal/                  # Journal module (stub)
-│   ├── journal.ts
-│   ├── journal.html
-│   └── journal.css
-└── habit-tracker/            # Habit Tracker module (stub)
-    ├── habit-tracker.ts
-    ├── habit-tracker.html
-    └── habit-tracker.css
-```
-
-## Component Architecture
 
 ### Standalone Components
 

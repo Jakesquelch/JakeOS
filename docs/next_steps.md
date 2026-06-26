@@ -66,3 +66,7 @@ To continue development, consider:
 6. Write unit and integration tests
 7. Add loading states and better UX
 8. Consider adding a state management solution
+
+Additional thoughts:
+- How does this work for different OS/PCs? Are there pre-reqs that are needed or will it work on any system?
+- Why don't we use scss?
