@@ -1,1 +1,32 @@
-<p>journal works!</p>
+<main class="journal">
+    <div class="journal-container">
+        <h1>Journal</h1>
+
+        <div class="add-entry">
+            <textarea [(ngModel)]="newEntryContent" placeholder="What's on your mind?" rows="4"></textarea>
+            <button (click)="addEntry()">Add Entry</button>
+        </div>
+
+        <ul class="entry-list">
+            <li *ngFor="let entry of sortedEntries()">
+                <div class="entry-header">
+                    <span class="entry-date">{{ entry.createdAt | date: 'EEEE d MMMM y, h:mm a' }}</span>
+                    <span class="entry-actions" *ngIf="editingEntryId !== entry.id">
+                        <button (click)="editEntry(entry)">Edit</button>
+                        <button (click)="deleteEntry(entry.id)">Delete</button>
+                    </span>
+                </div>
+
+                <div class="entry-edit" *ngIf="editingEntryId === entry.id">
+                    <textarea [(ngModel)]="editEntryContent" rows="4"></textarea>
+                    <div>
+                        <button (click)="saveEntry(entry)">Save</button>
+                        <button (click)="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+
+                <p class="entry-content" *ngIf="editingEntryId !== entry.id">{{ entry.content }}</p>
+            </li>
+        </ul>
+    </div>
+</main>

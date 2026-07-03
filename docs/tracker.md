@@ -9,4 +9,5 @@ Testing out Fable to give me some advice on improvements.
 Task 1: Move the task stuff into a service. Currently the ToDoList component has a tasks array. This means we can't share this data with other components and we also lose it when we refresh.
 Task 2: Add data persistence
 I believe we will start with persistent local storage, then we can move onto looking at backend stuff after that.
+Learnt about signals.
 
