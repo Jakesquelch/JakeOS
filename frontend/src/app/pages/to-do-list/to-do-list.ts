@@ -21,6 +21,9 @@ export class ToDoList {
   editingTaskId: number | null = null;
   editTaskTitle = '';
 
+  doneCount = computed(() => this.taskService.tasks().filter((t) => t.completed).length);
+  openCount = computed(() => this.taskService.tasks().length - this.doneCount());
+
   // Recomputes only when the service's tasks signal changes.
   sortedTasks = computed(() => {
     const priorities = { high: 3, medium: 2, low: 1 };

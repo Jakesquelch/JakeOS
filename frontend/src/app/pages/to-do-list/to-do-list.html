@@ -1,43 +1,48 @@
-<main class="todo">
-    <div class="todo-container">
-        <h1>To-Do List</h1>
+<section class="page">
+  <p class="eyebrow">{{ openCount() }} open · {{ doneCount() }} done</p>
+  <h1 class="page-title">To-Do</h1>
+  <p class="page-sub">Everything you've promised yourself, in one place.</p>
 
-        <div class="add-task">
-            <input [(ngModel)]="newTaskTitle" placeholder="Task title" />
-            <input [(ngModel)]="newTaskGroup" placeholder="Group (optional)" />
-            <select [(ngModel)]="newTaskPriority">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
-            </select>
-            <button (click)="addTask()">Add Task</button>
-        </div>
+  <div class="toolbar">
+    <input class="field grow" [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()" placeholder="Add a task and press Enter…" />
+    <input class="field group-field" [(ngModel)]="newTaskGroup" placeholder="Group (optional)" />
+    <select class="field" [(ngModel)]="newTaskPriority">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    <button class="btn" (click)="addTask()">Add</button>
+  </div>
 
-        <ul class="task-list">
-            <li *ngFor="let task of sortedTasks()" [class.completed]="task.completed">
-                <input type="checkbox" [checked]="task.completed" (change)="toggleComplete(task)" />
-                
-                <span *ngIf="editingTaskId === task.id">
-                    <input [(ngModel)]="editTaskTitle" />
-                    <button (click)="saveTask(task)">Save</button>
-                    <button (click)="cancelEdit()">Cancel</button>
-                </span>
+  <div class="card">
+    <ul class="list">
+      <li *ngFor="let task of sortedTasks()" [class.completed]="task.completed">
+        <input type="checkbox" [checked]="task.completed" (change)="toggleComplete(task)" />
 
-                <span *ngIf="editingTaskId !== task.id">
-                    <strong *ngIf="task.group">[{{ task.group }}]</strong> {{ task.title }}
-                    <small 
-                        class="priority"
-                        [class.priority-low]="task.priority === 'low'"
-                        [class.priority-medium]="task.priority === 'medium'"
-                        [class.priority-high]="task.priority === 'high'"
-                    >
-                    {{ task.priority | titlecase }}
-                    </small>
-                    <button (click)="editTask(task)">Edit</button>
-                    <button (click)="deleteTask(task.id)">Delete</button>
-                </span>
-            </li>
-        </ul>
-    </div>
-</main>
+        <ng-container *ngIf="editingTaskId === task.id; else viewMode">
+          <input class="field grow" [(ngModel)]="editTaskTitle" (keyup.enter)="saveTask(task)" />
+          <button class="icon-btn" (click)="saveTask(task)">Save</button>
+          <button class="icon-btn" (click)="cancelEdit()">Cancel</button>
+        </ng-container>
 
+        <ng-template #viewMode>
+          <span class="task-title">{{ task.title }}</span>
+          <span class="tag" *ngIf="task.group">{{ task.group }}</span>
+          <span
+            class="pill"
+            [class.hi]="task.priority === 'high'"
+            [class.md]="task.priority === 'medium'"
+            [class.lo]="task.priority === 'low'"
+          >
+            {{ task.priority | titlecase }}
+          </span>
+          <span class="row-actions">
+            <button class="icon-btn" (click)="editTask(task)">Edit</button>
+            <button class="icon-btn danger" (click)="deleteTask(task.id)">Delete</button>
+          </span>
+        </ng-template>
+      </li>
+    </ul>
+    <p class="empty" *ngIf="sortedTasks().length === 0">Nothing here yet — add your first task above.</p>
+  </div>
+</section>

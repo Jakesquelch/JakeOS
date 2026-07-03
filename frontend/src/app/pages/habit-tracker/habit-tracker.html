@@ -1,32 +1,36 @@
-<main class="habit">
-    <div class="habit-container">
-        <h1>Habit Tracker</h1>
+<section class="page">
+  <p class="eyebrow">{{ doneToday() }} of {{ habits().length }} done today</p>
+  <h1 class="page-title">Habits</h1>
+  <p class="page-sub">Small things, done daily.</p>
 
-        <div class="add-habit">
-            <input [(ngModel)]="newHabitName" placeholder="New habit (e.g. Read 10 pages)" (keyup.enter)="addHabit()" />
-            <button (click)="addHabit()">Add Habit</button>
-        </div>
+  <div class="toolbar">
+    <input class="field grow" [(ngModel)]="newHabitName" (keyup.enter)="addHabit()" placeholder="New habit, e.g. Read 10 pages…" />
+    <button class="btn" (click)="addHabit()">Add habit</button>
+  </div>
 
-        <ul class="habit-list">
-            <li *ngFor="let habit of habits()">
-                <div class="habit-header">
-                    <strong>{{ habit.name }}</strong>
-                    <span class="streak" *ngIf="streak(habit) > 0">🔥 {{ streak(habit) }} day streak</span>
-                    <button class="delete" (click)="deleteHabit(habit.id)">Delete</button>
-                </div>
-                <div class="day-grid">
-                    <button
-                        *ngFor="let day of recentDays"
-                        class="day-cell"
-                        [class.done]="isDone(habit, day.date)"
-                        [class.today]="day.date === today"
-                        (click)="toggleDay(habit, day.date)"
-                        [title]="day.date"
-                    >
-                        {{ day.label }}
-                    </button>
-                </div>
-            </li>
-        </ul>
+  <div class="card habit-row" *ngFor="let habit of habits()">
+    <div class="habit-top">
+      <strong>{{ habit.name }}</strong>
+      <span class="pill md streak" *ngIf="streak(habit) > 0">🔥 {{ streak(habit) }} day streak</span>
+      <span class="habit-actions">
+        <button class="icon-btn danger" (click)="deleteHabit(habit.id)">Delete</button>
+      </span>
     </div>
-</main>
+    <div class="week">
+      <button
+        *ngFor="let day of recentDays"
+        class="day"
+        [class.on]="isDone(habit, day.date)"
+        [class.today]="day.date === today"
+        [title]="day.date"
+        (click)="toggleDay(habit, day.date)"
+      >
+        {{ day.label }}<b>{{ day.dayNum }}</b>
+      </button>
+    </div>
+  </div>
+
+  <p class="empty" *ngIf="habits().length === 0" style="padding-left: 0">
+    No habits yet — start with something small.
+  </p>
+</section>

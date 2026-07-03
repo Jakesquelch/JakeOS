@@ -2,213 +2,124 @@
 
 ## Feature Overview
 
-This document provides a detailed breakdown of all features, their current implementation status, and what remains to be built.
+This document provides a breakdown of all features, their current implementation status, and what remains to be built.
+
+Last major update: July 2026 (redesign + all three core modules implemented).
 
 ---
 
-## 🏠 Landing Page
+## 🏠 Dashboard
 
 ### Status: ✅ COMPLETE
 
-The landing page serves as the main navigation hub for the application.
+The old landing page is now a proper dashboard (`pages/dashboard/`) — the home screen of the app.
 
 #### Implemented Features:
-- ✅ Clean, centered layout with "Jake's OS" title
-- ✅ Three navigation boxes for each module:
-  - To-Do List (with icon)
-  - Journal (with icon)
-  - Habit Tracker (with icon)
-- ✅ Click-to-navigate functionality using Angular Router
-- ✅ Visual icons for each feature (stored in `assets/`)
-- ✅ Responsive box layout
-
-#### Technical Details:
-- Component: `LandingPage`
-- Route: `/` (root path)
-- Dependencies: RouterModule
-- Assets: `todo.png`, `journal.png`, `habits.png`
+- ✅ Time-of-day greeting and date
+- ✅ Quick-capture box (adds a medium-priority task from anywhere)
+- ✅ Live stat cards for each module, computed from the shared services:
+  - Tasks: done/total with progress meter
+  - Journal: entry count + time of last entry
+  - Habits: done-today count with one dot per habit
+- ✅ "Up next" — top three open tasks by priority
+- ✅ Stat cards navigate to their module
 
 ---
 
 ## ✅ To-Do List Module
 
-### Status: ✅ MOSTLY COMPLETE (Missing Persistence)
+### Status: ✅ COMPLETE (core)
 
-A fully functional task management system with priority-based organization.
+Task management with priorities, optional grouping, and persistence.
 
 ### Implemented Features:
-
-#### ✅ Task Creation
-- Add new tasks with a title
-- Set priority level (Low, Medium, High)
-- Optional task grouping/categorization
-- Default priority: Medium
-- Form clears after task creation
-
-#### ✅ Task Display
-- List view of all tasks
-- Visual priority indicators with color coding:
-  - High priority: Red/urgent styling
-  - Medium priority: Yellow/normal styling
-  - Low priority: Green/low-priority styling
-- Group labels displayed when set
-- Automatic sorting by priority (High → Medium → Low)
-
-#### ✅ Task Management
-- **Edit Task:** Inline editing of task titles
-  - Click "Edit" button to enter edit mode
-  - Save or Cancel options
-  - Input validation (no empty titles)
-- **Delete Task:** Remove tasks permanently
-- **Visual Feedback:** Completed tasks show different styling
-
-#### ✅ Task Organization
-- Priority-based automatic sorting
-- Optional grouping system
-- Completed vs. incomplete visual distinction
+- ✅ Add tasks (title, priority, optional group) — Enter key or button
+- ✅ Priority pills (High/Medium/Low) with per-theme colors
+- ✅ Group shown as a tag chip
+- ✅ Automatic sorting by priority
+- ✅ Complete/uncomplete via checkbox (strikes through the title only)
+- ✅ Inline editing with Save/Cancel
+- ✅ Delete (Edit/Delete revealed on row hover)
+- ✅ **Persistence via localStorage** (`jakeos-tasks`)
+- ✅ Empty state message
 
 ### Technical Implementation:
+- Model: `models/task.model.ts` (`id`, `title`, `description?`, `completed`, `priority`, `group?`)
+- State lives in `services/task.service.ts` — a signal, updated immutably, auto-saved to localStorage by an `effect()`
+- Component (`pages/to-do-list/`) is a thin view layer: `computed()` for sorting, methods delegate to the service
 
-#### Data Model:
-```typescript
-interface Task {
-  id: number;              // Timestamp-based unique ID
-  title: string;           // Task description
-  description?: string;    // Not used yet
-  completed: boolean;      // Completion status
-  priority: 'low' | 'medium' | 'high';
-  group?: string;          // Optional category
-}
-```
-
-#### Component State:
-- `tasks: Task[]` - Array of all tasks
-- `newTaskTitle: string` - Form input for new task
-- `newTaskGroup: string` - Form input for group
-- `newTaskPriority` - Selected priority level
-- `editingTaskId: number | null` - Track which task is being edited
-- `editTaskTitle: string` - Temporary storage for edit
-
-#### Key Methods:
-- `addTask()` - Create new task
-- `deleteTask(id)` - Remove task
-- `editTask(task)` - Enter edit mode
-- `saveTask(task)` - Save edited task
-- `cancelEdit()` - Cancel editing
-- `sortedTasks` - Computed property for priority sorting
-
-### Missing Features:
-
-#### ❌ Data Persistence
-- **Issue:** All tasks are lost on page refresh
-- **Solution Needed:** 
-  - Add localStorage for client-side storage
-  - Or implement backend API for cloud storage
-
-#### ❌ Task Description
-- **Issue:** Description field exists in model but not in UI
-- **Solution Needed:** Add textarea for detailed task descriptions
-
-#### ❌ Due Dates
-- **Issue:** No date/time tracking
-- **Solution Needed:** Add date picker for deadlines
-
-#### ❌ Task Filtering
-- **Issue:** Can't filter by priority, group, or completion status
-- **Solution Needed:** Add filter controls
-
-#### ❌ Task Search
-- **Issue:** No search functionality
-- **Solution Needed:** Add search input to filter tasks by title
-
-#### ❌ Drag & Drop Reordering
-- **Issue:** Can't manually reorder tasks
-- **Solution Needed:** Implement drag-and-drop functionality
-
-#### ❌ Subtasks
-- **Issue:** No nested task support
-- **Solution Needed:** Add subtask/checklist feature
+### Future Ideas:
+- [ ] Task description in the UI (field exists in the model)
+- [ ] Due dates
+- [ ] Filtering (priority/group/completion) and search
+- [ ] Drag & drop reordering
+- [ ] Subtasks
 
 ---
 
 ## 📔 Journal Module
 
-### Status: ❌ NOT IMPLEMENTED (Stub Only)
+### Status: ✅ COMPLETE (core)
 
-The journal module is currently just a placeholder component.
+Free-form journaling — the heart of the "dump your mind" idea.
 
-### Current State:
-- Basic component structure exists
-- Shows "journal works!" placeholder text
-- No functionality implemented
+### Implemented Features:
+- ✅ Write entries in a textarea composer
+- ✅ Entries listed newest-first with date/time stamps
+- ✅ Edit and delete (revealed on hover)
+- ✅ Multi-line entries preserved (`white-space: pre-wrap`)
+- ✅ Serif reading typography for entry text
+- ✅ **Persistence via localStorage** (`jakeos-journal`)
 
-### Planned Features:
+### Technical Implementation:
+- Model: `models/journal-entry.model.ts` (`id`, `content`, `createdAt` ISO timestamp)
+- `services/journal.service.ts` — same signal + localStorage pattern as tasks
 
-#### 📝 Core Journaling
-- [ ] Create new journal entries
-- [ ] Rich text editor for formatting
-- [ ] Date/time stamps for entries
-- [ ] Edit existing entries
-- [ ] Delete entries
-- [ ] Search entries
-
-#### 🏷️ Organization
-- [ ] Tags/categories for entries
-- [ ] Mood tracking
-- [ ] Filter by date range
-- [ ] Filter by tags/mood
-
-#### 💾 Storage
-- [ ] Save entries to localStorage or backend
-- [ ] Export entries (PDF, Markdown, etc.)
-- [ ] Import entries
-
-#### 🎨 UI Features
-- [ ] Calendar view of entries
-- [ ] List view with previews
+### Future Ideas:
+- [ ] Tags / mood tracking
+- [ ] Search and date-range filtering
+- [ ] Calendar view
 - [ ] Full-screen writing mode
-- [ ] Dark mode support
+- [ ] Export (Markdown/PDF)
 
 ---
 
 ## 🎯 Habit Tracker Module
 
-### Status: ❌ NOT IMPLEMENTED (Stub Only)
+### Status: ✅ COMPLETE (core)
 
-The habit tracker module is currently just a placeholder component.
+Daily habit tracking over a rolling 7-day window.
 
-### Current State:
-- Basic component structure exists
-- Shows "habit-tracker works!" placeholder text
-- No functionality implemented
+### Implemented Features:
+- ✅ Add/delete habits
+- ✅ Last 7 days as clickable day cells (weekday + day number, today outlined)
+- ✅ Toggle any of the 7 days done/undone
+- ✅ 🔥 Streak counter (consecutive days, forgiving of an unticked today)
+- ✅ **Persistence via localStorage** (`jakeos-habits`)
 
-### Planned Features:
+### Technical Implementation:
+- Model: `models/habit.model.ts` (`id`, `name`, `completedDates: string[]` of local `"YYYY-MM-DD"` strings)
+- `services/habit.service.ts` — same signal + localStorage pattern
+- Local-date helper in `util/date.ts` (avoids the UTC off-by-one-day pitfall)
 
-#### 📊 Habit Management
-- [ ] Create new habits to track
-- [ ] Set habit frequency (daily, weekly, custom)
-- [ ] Mark habits as complete for each day
-- [ ] Edit habit details
-- [ ] Delete habits
-- [ ] Archive completed habits
+### Future Ideas:
+- [ ] Longer history / calendar view
+- [ ] Habit frequency (weekly, custom)
+- [ ] Success-rate stats
+- [ ] Archive habits
 
-#### 📈 Tracking & Visualization
-- [ ] Calendar view showing completion history
-- [ ] Streak counter (consecutive days completed)
-- [ ] Success rate percentage
-- [ ] Visual charts/graphs
-- [ ] Monthly/yearly summaries
+---
 
-#### 🎯 Goals & Motivation
-- [ ] Set target streaks
-- [ ] Habit reminders/notifications
-- [ ] Motivational quotes or messages
-- [ ] Habit notes/reflections
+## 🎨 Design System & Theming
 
-#### 💾 Data Management
-- [ ] Save habit data to localStorage or backend
-- [ ] Export habit history
-- [ ] Import habits
+### Status: ✅ COMPLETE
+
+- ✅ Token-based design system in `styles.css` (colors, radii, type as CSS variables)
+- ✅ Four themes: **Oat** (light), **Dusk** (warm grey), **Ink** (navy), **Candlelit** (dark)
+- ✅ Theme switcher (swatch dots in the sidebar), choice persisted (`jakeos-theme`)
+- ✅ First visit follows the OS light/dark preference
+- ✅ Persistent sidebar navigation (app shell in `app.html`)
+- ✅ Serif display font, shared `.card`/`.btn`/`.pill` component classes
 
 ---
 
@@ -216,65 +127,33 @@ The habit tracker module is currently just a placeholder component.
 
 ### Status: ❌ NOT IMPLEMENTED
 
-Currently, there is no user system.
-
-### Needed Features:
-- [ ] User registration
-- [ ] Login/logout
-- [ ] Password reset
-- [ ] User profile management
+- [ ] User registration / login / logout
 - [ ] Multi-device sync
-- [ ] Data privacy controls
 
 ---
 
 ## 🌐 Backend & API
 
-### Status: ❌ NOT IMPLEMENTED
+### Status: ❌ NOT IMPLEMENTED (next up)
 
-Currently, there is no backend server.
+Planned: Python **FastAPI** backend with **SQLite** (via SQLAlchemy), replacing the
+localStorage layer inside the services with HTTP calls. The service layer was built
+so components won't change when this happens.
 
-### Needed Components:
-- [ ] REST API or GraphQL endpoint
-- [ ] Database (PostgreSQL, MongoDB, etc.)
-- [ ] Authentication service
-- [ ] Data synchronization
-- [ ] Backup system
-- [ ] API documentation
+- [ ] REST API (tasks first, then journal/habits)
+- [ ] Database
+- [ ] Angular `HttpClient` integration + CORS setup
 
 ---
 
-## 📱 Cross-Platform & Responsive Design
+## 📱 Responsive Design
 
-### Status: ⚠️ PARTIALLY IMPLEMENTED
+### Status: ⚠️ DESKTOP-FIRST
 
-The app has basic styling but needs responsive design work.
+The new layout is desktop-oriented; the sidebar shell needs a mobile treatment.
 
-### Needed Improvements:
-- [ ] Mobile-responsive layouts
-- [ ] Tablet optimization
+- [ ] Mobile-responsive layouts (collapsible sidebar)
 - [ ] Touch-friendly controls
-- [ ] Progressive Web App (PWA) features
-- [ ] Offline support
-- [ ] Native mobile apps (optional)
-
----
-
-## 🎨 UI/UX Enhancements
-
-### Status: ⚠️ BASIC IMPLEMENTATION
-
-The UI is functional but could be improved.
-
-### Potential Improvements:
-- [ ] Loading states and spinners
-- [ ] Error messages and validation feedback
-- [ ] Success notifications/toasts
-- [ ] Animations and transitions
-- [ ] Dark mode
-- [ ] Accessibility improvements (ARIA labels, keyboard navigation)
-- [ ] Onboarding tutorial
-- [ ] Help documentation
 
 ---
 
@@ -282,14 +161,8 @@ The UI is functional but could be improved.
 
 ### Status: ❌ NOT IMPLEMENTED
 
-No tests have been written yet.
-
-### Needed Tests:
-- [ ] Unit tests for components
-- [ ] Integration tests
-- [ ] End-to-end tests
-- [ ] Accessibility tests
-- [ ] Performance tests
+- [ ] Unit tests for the services (natural starting point — pure logic)
+- [ ] Component tests
 
 ---
 
@@ -297,30 +170,23 @@ No tests have been written yet.
 
 ### Status: ❌ NOT IMPLEMENTED
 
-No deployment pipeline exists.
-
-### Needed Infrastructure:
-- [ ] Production build configuration
-- [ ] Hosting setup (Vercel, Netlify, AWS, etc.)
+- [ ] Hosting setup
 - [ ] CI/CD pipeline
-- [ ] Environment variables
-- [ ] Monitoring and logging
-- [ ] Error tracking (Sentry, etc.)
 
 ---
 
 ## Summary
 
 ### Completion Status:
-- **Landing Page:** 100% ✅
-- **To-Do List:** 80% ✅ (missing persistence)
-- **Journal:** 0% ❌
-- **Habit Tracker:** 0% ❌
-- **Backend/API:** 0% ❌
-- **Authentication:** 0% ❌
-- **Testing:** 0% ❌
-- **Deployment:** 0% ❌
+- **Dashboard:** ✅ done
+- **To-Do List:** ✅ core done (persistence included)
+- **Journal:** ✅ core done
+- **Habit Tracker:** ✅ core done
+- **Design system / theming:** ✅ done
+- **Backend/API:** ❌ next up
+- **Authentication:** ❌
+- **Testing:** ❌
+- **Deployment:** ❌
 
-### Overall Project Completion: ~15%
-
-The project has a solid foundation with a working To-Do List, but significant work remains to build out the other modules and add essential features like data persistence, authentication, and a backend.
+The frontend is now a genuinely usable local-first app. The next big step is the
+FastAPI + SQLite backend, then authentication and sync.

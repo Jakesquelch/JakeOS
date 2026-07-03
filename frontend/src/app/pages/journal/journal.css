@@ -1,94 +1,53 @@
-.journal {
-    text-align: left;
-    padding: 50px;
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
-.journal-container {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 40px;
-    border: 1px solid;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    background: #fff;
+.composer textarea,
+.entry-edit textarea {
+  width: 100%;
+  resize: vertical;
 }
 
-.add-entry {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.composer-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
 }
 
-.add-entry textarea, .entry-edit textarea {
-    width: 100%;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #4caf50;
-    font: inherit;
-    resize: vertical;
-    box-sizing: border-box;
-}
-
-.add-entry button {
-    align-self: flex-start;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
-}
-
-.entry-list {
-    list-style: none;
-    padding: 0;
-}
-
-.entry-list li {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.entry-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+.entry {
+  padding: 18px 22px;
+  margin-bottom: 14px;
 }
 
 .entry-date {
-    font-size: 0.9rem;
-    color: #666;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  margin: 0;
 }
-
-.entry-content {
-    margin: 0;
-    font-size: 1.1rem;
-    white-space: pre-wrap; /* keep the line breaks typed in the textarea */
-}
+.entry-date .row-actions { margin-left: auto; }
+.entry:hover .row-actions { opacity: 1; }
 
 .entry-edit {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 9px;
 }
 
-.entry-list button {
-    font-size: 1rem;
-    padding: 4px 10px;
-    border-radius: 6px;
-    border: none;
-    background: #ddd;
-    cursor: pointer;
-    min-width: 55px;
-}
-
-.entry-list button:hover {
-    background: #ccc;
-}
-
-.entry-list button + button {
-    margin-left: 8px;
+/* Serif body: this is the reading/writing heart of the app */
+.entry-body {
+  margin: 9px 0 0;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  white-space: pre-wrap; /* keep the line breaks typed in the textarea */
+  max-width: 62ch;
 }

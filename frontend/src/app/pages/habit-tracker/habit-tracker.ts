@@ -1,15 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Habit } from '../../models/habit.model';
 import { HabitService } from '../../services/habit.service';
-
-// "2026-07-03" in local time (toISOString would shift the date near midnight, since it uses UTC).
-function toLocalDate(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${date.getFullYear()}-${month}-${day}`;
-}
+import { toLocalDate } from '../../util/date';
 
 @Component({
   selector: 'app-habit-tracker',
@@ -24,8 +18,12 @@ export class HabitTracker {
   habits = this.habitService.habits;
   newHabitName = '';
   today = toLocalDate(new Date());
-  // Last 7 days, oldest first, e.g. { date: "2026-07-03", label: "Thu" }.
+  // Last 7 days, oldest first, e.g. { date: "2026-07-03", label: "Fri", dayNum: 3 }.
   recentDays = this.buildRecentDays();
+
+  doneToday = computed(
+    () => this.habitService.habits().filter((h) => h.completedDates.includes(this.today)).length
+  );
 
   private buildRecentDays() {
     const days = [];
@@ -35,6 +33,7 @@ export class HabitTracker {
       days.push({
         date: toLocalDate(d),
         label: d.toLocaleDateString(undefined, { weekday: 'short' }),
+        dayNum: d.getDate(),
       });
     }
     return days;

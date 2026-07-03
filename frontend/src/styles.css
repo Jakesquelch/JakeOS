@@ -1,28 +1,250 @@
-h1 {
-    font-size: 3.125rem;
-    color: var(--gray-900);
-    font-weight: 500;
-    line-height: 100%;
-    letter-spacing: -0.125rem;
-    margin: 0;
-    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
+/* ============================================================
+   JakeOS design system
+   Four themes share one set of token names; components only
+   ever reference the tokens, so switching theme = switching
+   the data-theme attribute on <html> (see ThemeService).
+   ============================================================ */
+
+:root {
+  /* Shape & type — same across all themes */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-body: -apple-system, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Iowan Old Style", Charter, Georgia, Cambria, serif;
+
+  /* Theme: Oat (light — default) */
+  --bg: #f2efe8;
+  --surface: #faf8f2;
+  --surface-2: #eae5d9;
+  --ink: #37302a;
+  --muted: #7d7466;
+  --border: #e0dacb;
+  --accent: #a3491f;
+  --accent-ink: #fdf6ec;
+  --accent-soft: #f2e0d3;
+  --done: #5f7a4e;
+  --danger: #a3401f;
+  --hi-bg: #f2ddd0;  --hi-fg: #9c4a21;
+  --md-bg: #efe4c6;  --md-fg: #8a6914;
+  --lo-bg: #e4e8d6;  --lo-fg: #5f7a4e;
+  --shadow: 0 2px 10px rgba(90, 80, 55, 0.09);
 }
 
-p {
-    margin: 0;
-    color: var(--gray-700);
-    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
+:root[data-theme="dusk"] {
+  --bg: #3b3833;
+  --surface: #45413b;
+  --surface-2: #524d45;
+  --ink: #ece7dd;
+  --muted: #a89f91;
+  --border: #57524a;
+  --accent: #cd7146;
+  --accent-ink: #2c190e;
+  --accent-soft: rgba(205, 113, 70, 0.16);
+  --done: #8aa576;
+  --danger: #e07a63;
+  --hi-bg: rgba(224, 122, 99, 0.18);  --hi-fg: #eda291;
+  --md-bg: rgba(217, 178, 59, 0.16);  --md-fg: #dfc276;
+  --lo-bg: rgba(138, 165, 118, 0.16); --lo-fg: #adc79a;
+  --shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
 }
 
-main {
-    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
+:root[data-theme="ink"] {
+  --bg: #2b303c;
+  --surface: #343a48;
+  --surface-2: #3e4554;
+  --ink: #e9e6db;
+  --muted: #9fa5b1;
+  --border: #454c5c;
+  --accent: #cd7146;
+  --accent-ink: #2c190e;
+  --accent-soft: rgba(205, 113, 70, 0.16);
+  --done: #8aa576;
+  --danger: #e07a63;
+  --hi-bg: rgba(224, 122, 99, 0.18);  --hi-fg: #eda291;
+  --md-bg: rgba(217, 178, 59, 0.16);  --md-fg: #dfc276;
+  --lo-bg: rgba(138, 165, 118, 0.16); --lo-fg: #adc79a;
+  --shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
 }
 
+:root[data-theme="candlelit"] {
+  --bg: #211a13;
+  --surface: #2a2218;
+  --surface-2: #362b1e;
+  --ink: #ece1cf;
+  --muted: #a5947c;
+  --border: #443826;
+  --accent: #d98e3b;
+  --accent-ink: #2b1d0c;
+  --accent-soft: rgba(217, 142, 59, 0.14);
+  --done: #93b07c;
+  --danger: #e07a63;
+  --hi-bg: rgba(224, 122, 99, 0.16);  --hi-fg: #e59a88;
+  --md-bg: rgba(217, 178, 59, 0.14);  --md-fg: #dcc06a;
+  --lo-bg: rgba(147, 176, 124, 0.14); --lo-fg: #a8c191;
+  --shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+}
 
+/* ============ Base ============ */
 
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============ Page scaffolding (used by every routed page) ============ */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+
+.page-sub {
+  color: var(--muted);
+  margin: 0 0 26px;
+  font-size: 0.95rem;
+}
+
+/* ============ Shared components ============ */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.btn {
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 11px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.icon-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.icon-btn:hover { color: var(--ink); border-color: var(--muted); }
+.icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
+.icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.field {
+  font: inherit;
+  font-size: 0.93rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+}
+.field::placeholder { color: var(--muted); }
+.field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.field.grow { flex: 1; }
+select.field option { background: var(--surface); color: var(--ink); }
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.97rem;
+}
+.list li:last-child { border-bottom: none; }
+
+input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--done);
+  cursor: pointer;
+  flex: none;
+}
+
+.tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+  border-radius: 99px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.pill {
+  font-size: 0.74rem;
+  font-weight: 650;
+  border-radius: 99px;
+  padding: 3px 10px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.pill.hi { background: var(--hi-bg); color: var(--hi-fg); }
+.pill.md { background: var(--md-bg); color: var(--md-fg); }
+.pill.lo { background: var(--lo-bg); color: var(--lo-fg); }
+
+/* Revealed by the parent row's :hover in component styles */
+.row-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.empty {
+  padding: 22px 20px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

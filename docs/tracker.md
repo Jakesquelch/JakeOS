@@ -10,4 +10,9 @@ Task 1: Move the task stuff into a service. Currently the ToDoList component has
 Task 2: Add data persistence
 I believe we will start with persistent local storage, then we can move onto looking at backend stuff after that.
 Learnt about signals.
+Then added in the journal and habit tracker sections with the same model-service architecture
+Now going to make some design changes to make it look better, before moving onto backend stuff.
+
+Next time:
+- Take a look at the updated architecure.md and features.md file then maybe update the my-understanding doc. All while consolidating what has happened, delving into the code a bit, and trying to gain a better understanding. A lot of changes happened today. So we don't want to progress too quickly.
 

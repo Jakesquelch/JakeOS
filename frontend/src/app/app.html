@@ -1,1 +1,43 @@
-<router-outlet></router-outlet>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="logo">JakeOS<span class="logo-dot">.</span></div>
+
+    <nav class="nav">
+      <a class="nav-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1.2"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1.2"/><rect x="9" y="9" width="5.5" height="5.5" rx="1.2"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-btn" routerLink="/todo" routerLinkActive="active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5"/><path d="M5 8.2 7.2 10.4 11 5.8"/></svg>
+        To-Do
+      </a>
+      <a class="nav-btn" routerLink="/journal" routerLinkActive="active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 2.5h8.5A1.5 1.5 0 0 1 13 4v9.5a1 1 0 0 0-1-1H3z"/><path d="M3 2.5v10a1 1 0 0 0 1 1h9"/></svg>
+        Journal
+      </a>
+      <a class="nav-btn" routerLink="/habit" routerLinkActive="active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.8c.4 2.4-2.8 3.4-2.8 6a2.8 2.8 0 0 0 5.6 0c0-1-.4-1.8-.9-2.5-.3 .7-.8 1.1-1.4 1.2 .6-1.5 .2-3.4-.5-4.7z"/></svg>
+        Habits
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="theme-row" role="group" aria-label="Theme">
+        <button
+          *ngFor="let t of themes"
+          class="theme-dot"
+          [attr.data-dot]="t"
+          [class.active]="t === theme()"
+          [title]="t"
+          [attr.aria-pressed]="t === theme()"
+          (click)="setTheme(t)"
+        ></button>
+      </div>
+      <div class="date">{{ today | date: 'EEEE d MMMM' }}</div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
