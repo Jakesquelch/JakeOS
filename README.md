@@ -8,8 +8,8 @@ So this projects goal is to be a personal productivity web application designed 
 ### Setup:
 ```bash
 cd frontend
-npm i (this installs the dependencies)
-npm start (this is the equivalent of ng serve)
+npm i (installs the dependencies)
+npm start (equivalent of ng serve)
 ```
 
 ### Technology Stack
@@ -21,11 +21,3 @@ npm start (this is the equivalent of ng serve)
 - **Node.js** (v18 or higher recommended, I am on 22.20.0)
 - **npm** (v11.6.4 or higher, I am on 11.6.4)
 - **Git** (for version control)
-
-### Picking back up:
-- Can read over [Project Overview](docs/architecture.md) and [Features](docs/features.md) to remind yourself of the project
-- Checkout [Next Steps](docs/next_steps.md) if want to continue to work on this!
-
-### Tracker:
-26th July - I kind of vibe coded this a while back. Picking it up now but am working from the bottom up. Spending some time to learn the code, learn what's happening, and get my surroundings a bit, before I continue to do any work on this. Created the new [File](docs/my-understanding.md)
-Next time: Continue reading through the docs, learning how the code works, and updating my-understanding. Look through architecture.md and go file through file getting claude to explain it. Really go deep and understand.

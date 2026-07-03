@@ -55,7 +55,6 @@ A fully functional task management system with priority-based organization.
 - Automatic sorting by priority (High → Medium → Low)
 
 #### ✅ Task Management
-- **Toggle Completion:** Checkbox to mark tasks as done
 - **Edit Task:** Inline editing of task titles
   - Click "Edit" button to enter edit mode
   - Save or Cancel options
@@ -93,7 +92,6 @@ interface Task {
 #### Key Methods:
 - `addTask()` - Create new task
 - `deleteTask(id)` - Remove task
-- `toggleComplete(task)` - Toggle completion status
 - `editTask(task)` - Enter edit mode
 - `saveTask(task)` - Save edited task
 - `cancelEdit()` - Cancel editing

@@ -38,10 +38,6 @@ export class ToDoList {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  toggleComplete(task: Task) {
-    task.completed = !task.completed;
-  }
-
   editTask(task: Task) {
     this.editingTaskId = task.id;
     this.editTaskTitle = task.title;
