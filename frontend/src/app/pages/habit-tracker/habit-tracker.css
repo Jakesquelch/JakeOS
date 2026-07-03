@@ -1,0 +1,109 @@
+.habit {
+    text-align: left;
+    padding: 50px;
+}
+
+.habit-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 40px;
+    border: 1px solid;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+.add-habit {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.add-habit input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #4caf50;
+}
+
+.add-habit button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.habit-list {
+    list-style: none;
+    padding: 0;
+}
+
+.habit-list li {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.habit-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.streak {
+    font-size: 0.9rem;
+    color: #e65100;
+}
+
+.habit-header .delete {
+    margin-left: auto;
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+}
+
+.habit-header .delete:hover {
+    background: #ccc;
+}
+
+.day-grid {
+    display: flex;
+    gap: 8px;
+}
+
+.day-cell {
+    width: 55px;
+    padding: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.day-cell:hover {
+    border-color: #4caf50;
+}
+
+.day-cell.done {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+.day-cell.today {
+    border-width: 2px;
+    border-color: #333;
+    font-weight: bold;
+}
+
+.day-cell.done.today {
+    border-color: #2e7d32;
+}
