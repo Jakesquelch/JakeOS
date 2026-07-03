@@ -1,12 +1,32 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { Task } from '../models/task.model';
+
+const STORAGE_KEY = 'jakeos-tasks';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   // Only the service can write to this signal:
-  private tasksSignal = signal<Task[]>([]);
+  private tasksSignal = signal<Task[]>(this.loadTasks());
   // ...components get a read-only view of it:
   readonly tasks = this.tasksSignal.asReadonly();
+
+  constructor() {
+    // Runs once now, then again every time the tasks signal changes,
+    // so every add/delete/edit is saved without each method having to remember to.
+    effect(() => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasksSignal()));
+    });
+  }
+
+  private loadTasks(): Task[] {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      // Corrupted/hand-edited data shouldn't crash the app; start fresh.
+      return [];
+    }
+  }
 
   addTask(title: string, priority: Task['priority'], group?: string) {
     const newTask: Task = {
