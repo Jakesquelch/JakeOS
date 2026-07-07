@@ -2,8 +2,8 @@
 So this projects goal is to be a personal productivity web application designed to help you manage your daily life. I've always been quite an organised individual. I like to have systems in place to help me dump information from my brain and get it down somewhere. So I have 3 core modules apart of this project, that I find useful and use day-to-day:
 
 1. **To-Do List** - Task management with priorities and grouping
-2. **Journal** - Personal journaling (planned feature)
-3. **Habit Tracker** - Track daily habits and build consistency (planned feature)
+2. **Journal** - Personal journaling 
+3. **Habit Tracker** - Track daily habits and build consistency 
 
 ### Setup:
 ```bash

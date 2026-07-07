@@ -1,5 +1,5 @@
 import { effect, Injectable, signal } from '@angular/core';
-import { Task } from '../models/task.model';
+import { Task, TaskGroup } from '../models/task.model';
 
 const STORAGE_KEY = 'jakeos-tasks';
 
@@ -28,7 +28,8 @@ export class TaskService {
     }
   }
 
-  addTask(title: string, priority: Task['priority'], group?: string) {
+  // '' comes from the form's "No group" option and is stored as undefined.
+  addTask(title: string, priority: Task['priority'], group?: TaskGroup | '') {
     const newTask: Task = {
       id: Date.now(),
       title,

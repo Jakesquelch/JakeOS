@@ -25,9 +25,9 @@ export class Dashboard {
 
   private buildGreeting(): string {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Morning, Jake.';
-    if (hour < 18) return 'Afternoon, Jake.';
-    return 'Evening, Jake.';
+    if (hour < 12) return 'Good Morning, Jake.';
+    if (hour < 18) return 'Good Afternoon, Jake.';
+    return 'Good Evening, Jake.';
   }
 
   // --- Tasks ---

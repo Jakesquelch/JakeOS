@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Task } from '../../models/task.model';
+import { Task, TaskGroup } from '../../models/task.model';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 
@@ -16,7 +16,7 @@ export class ToDoList {
   private taskService = inject(TaskService);
 
   newTaskTitle = '';
-  newTaskGroup = '';
+  newTaskGroup: TaskGroup | '' = '';
   newTaskPriority: 'low' | 'medium' | 'high' = 'medium';
   editingTaskId: number | null = null;
   editTaskTitle = '';

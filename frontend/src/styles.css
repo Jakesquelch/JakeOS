@@ -13,6 +13,7 @@
   --font-display: "Iowan Old Style", Charter, Georgia, Cambria, serif;
 
   /* Theme: Oat (light — default) */
+  color-scheme: light;
   --bg: #f2efe8;
   --surface: #faf8f2;
   --surface-2: #eae5d9;
@@ -27,10 +28,14 @@
   --hi-bg: #f2ddd0;  --hi-fg: #9c4a21;
   --md-bg: #efe4c6;  --md-fg: #8a6914;
   --lo-bg: #e4e8d6;  --lo-fg: #5f7a4e;
+  --fun-bg: #f0dbe4;       --fun-fg: #a2486d;
+  --personal-bg: #dce9e2;  --personal-fg: #437a66;
+  --work-bg: #dfe3ee;      --work-fg: #4c6394;
   --shadow: 0 2px 10px rgba(90, 80, 55, 0.09);
 }
 
 :root[data-theme="dusk"] {
+  color-scheme: dark;
   --bg: #3b3833;
   --surface: #45413b;
   --surface-2: #524d45;
@@ -45,10 +50,14 @@
   --hi-bg: rgba(224, 122, 99, 0.18);  --hi-fg: #eda291;
   --md-bg: rgba(217, 178, 59, 0.16);  --md-fg: #dfc276;
   --lo-bg: rgba(138, 165, 118, 0.16); --lo-fg: #adc79a;
+  --fun-bg: rgba(226, 132, 168, 0.16);      --fun-fg: #e6a4be;
+  --personal-bg: rgba(112, 191, 163, 0.16); --personal-fg: #9accbb;
+  --work-bg: rgba(133, 162, 218, 0.16);     --work-fg: #aabede;
   --shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
 }
 
 :root[data-theme="ink"] {
+  color-scheme: dark;
   --bg: #2b303c;
   --surface: #343a48;
   --surface-2: #3e4554;
@@ -63,10 +72,14 @@
   --hi-bg: rgba(224, 122, 99, 0.18);  --hi-fg: #eda291;
   --md-bg: rgba(217, 178, 59, 0.16);  --md-fg: #dfc276;
   --lo-bg: rgba(138, 165, 118, 0.16); --lo-fg: #adc79a;
+  --fun-bg: rgba(226, 132, 168, 0.16);      --fun-fg: #e6a4be;
+  --personal-bg: rgba(112, 191, 163, 0.16); --personal-fg: #9accbb;
+  --work-bg: rgba(133, 162, 218, 0.16);     --work-fg: #aabede;
   --shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
 }
 
 :root[data-theme="candlelit"] {
+  color-scheme: dark;
   --bg: #211a13;
   --surface: #2a2218;
   --surface-2: #362b1e;
@@ -81,12 +94,25 @@
   --hi-bg: rgba(224, 122, 99, 0.16);  --hi-fg: #e59a88;
   --md-bg: rgba(217, 178, 59, 0.14);  --md-fg: #dcc06a;
   --lo-bg: rgba(147, 176, 124, 0.14); --lo-fg: #a8c191;
+  --fun-bg: rgba(226, 132, 168, 0.14);      --fun-fg: #dfa0b4;
+  --personal-bg: rgba(112, 191, 163, 0.14); --personal-fg: #9cc4b0;
+  --work-bg: rgba(133, 162, 218, 0.14);     --work-fg: #a3b6d6;
   --shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* ============ Base ============ */
 
 * { box-sizing: border-box; }
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 55%, transparent) transparent;
+}
 
 body {
   margin: 0;
@@ -108,7 +134,6 @@ body {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 6px;
 }
@@ -177,7 +202,37 @@ body {
 .field::placeholder { color: var(--muted); }
 .field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
 .field.grow { flex: 1; }
-select.field option { background: var(--surface); color: var(--ink); }
+select.field {
+  appearance: none;        /* fallback: strips the native arrow */
+  appearance: base-select; /* Chromium 135+: makes the dropdown panel stylable */
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1.5 1.75 6 6.25l4.5-4.5' fill='none' stroke='%238a8072' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
+}
+select.field::picker-icon { display: none; } /* we draw our own chevron above */
+select.field::picker(select) {
+  appearance: base-select;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  padding: 5px;
+  margin-top: 5px;
+}
+select.field option {
+  background: var(--surface);
+  color: var(--ink);
+  padding: 7px 11px;
+  border-radius: 6px;
+}
+select.field option:hover,
+select.field option:focus {
+  background: var(--accent-soft);
+}
+select.field option::checkmark { color: var(--accent); }
 
 .toolbar {
   display: flex;
@@ -201,12 +256,23 @@ select.field option { background: var(--surface); color: var(--ink); }
 .list li:last-child { border-bottom: none; }
 
 input[type="checkbox"] {
-  width: 17px;
-  height: 17px;
-  accent-color: var(--done);
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
   cursor: pointer;
   flex: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
+input[type="checkbox"]:hover { border-color: var(--done); }
+input[type="checkbox"]:checked {
+  border-color: var(--done);
+  background: var(--done) center / 13px no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.4 7 10.9 11.5 5.6' fill='none' stroke='%23fdf6ec' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .tag {
   font-size: 0.74rem;
@@ -217,6 +283,9 @@ input[type="checkbox"] {
   padding: 3px 10px;
   white-space: nowrap;
 }
+.tag.fun      { background: var(--fun-bg);      color: var(--fun-fg); }
+.tag.personal { background: var(--personal-bg); color: var(--personal-fg); }
+.tag.work     { background: var(--work-bg);     color: var(--work-fg); }
 
 .pill {
   font-size: 0.74rem;

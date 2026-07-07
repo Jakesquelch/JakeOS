@@ -10,27 +10,35 @@
     </div>
   </div>
 
-  <article class="card entry" *ngFor="let entry of sortedEntries()">
-    <p class="entry-date">
-      {{ entry.createdAt | date: 'EEE d MMM · h:mm a' }}
-      <span class="row-actions" *ngIf="editingEntryId !== entry.id">
-        <button class="icon-btn" (click)="editEntry(entry)">Edit</button>
-        <button class="icon-btn danger" (click)="deleteEntry(entry.id)">Delete</button>
-      </span>
+  @for (entry of sortedEntries(); track entry) {
+    <article class="card entry">
+      <p class="entry-date">
+        {{ entry.createdAt | date: 'EEE d MMM · h:mm a' }}
+        @if (editingEntryId !== entry.id) {
+          <span class="row-actions">
+            <button class="icon-btn" (click)="editEntry(entry)">Edit</button>
+            <button class="icon-btn danger" (click)="deleteEntry(entry.id)">Delete</button>
+          </span>
+        }
+      </p>
+      @if (editingEntryId === entry.id) {
+        <div class="entry-edit">
+          <textarea class="field" [(ngModel)]="editEntryContent" rows="4"></textarea>
+          <div class="composer-row">
+            <button class="icon-btn" (click)="saveEntry(entry)">Save</button>
+            <button class="icon-btn" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      }
+      @if (editingEntryId !== entry.id) {
+        <p class="entry-body">{{ entry.content }}</p>
+      }
+    </article>
+  }
+
+  @if (sortedEntries().length === 0) {
+    <p class="empty" style="padding-left: 0">
+      Your first entry is waiting to be written.
     </p>
-
-    <div class="entry-edit" *ngIf="editingEntryId === entry.id">
-      <textarea class="field" [(ngModel)]="editEntryContent" rows="4"></textarea>
-      <div class="composer-row">
-        <button class="icon-btn" (click)="saveEntry(entry)">Save</button>
-        <button class="icon-btn" (click)="cancelEdit()">Cancel</button>
-      </div>
-    </div>
-
-    <p class="entry-body" *ngIf="editingEntryId !== entry.id">{{ entry.content }}</p>
-  </article>
-
-  <p class="empty" *ngIf="sortedEntries().length === 0" style="padding-left: 0">
-    Your first entry is waiting to be written.
-  </p>
+  }
 </section>

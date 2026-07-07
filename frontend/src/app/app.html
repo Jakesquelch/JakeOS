@@ -23,15 +23,16 @@
 
     <div class="sidebar-foot">
       <div class="theme-row" role="group" aria-label="Theme">
-        <button
-          *ngFor="let t of themes"
-          class="theme-dot"
-          [attr.data-dot]="t"
-          [class.active]="t === theme()"
-          [title]="t"
-          [attr.aria-pressed]="t === theme()"
-          (click)="setTheme(t)"
-        ></button>
+        @for (t of themes; track t) {
+          <button
+            class="theme-dot"
+            [attr.data-dot]="t"
+            [class.active]="t === theme()"
+            [title]="t"
+            [attr.aria-pressed]="t === theme()"
+            (click)="setTheme(t)"
+          ></button>
+        }
       </div>
       <div class="date">{{ today | date: 'EEEE d MMMM' }}</div>
     </div>

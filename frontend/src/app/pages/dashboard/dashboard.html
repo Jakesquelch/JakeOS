@@ -1,16 +1,16 @@
 <section class="page">
   <p class="eyebrow">{{ today | date: 'EEEE d MMMM' }}</p>
   <h1 class="page-title">{{ greeting }}</h1>
-  <p class="page-sub">Get it out of your head — it's safe here.</p>
+  <p class="page-sub">Get it out of your head and into words</p>
 
   <div class="capture">
     <input
       class="field grow"
       [(ngModel)]="captureText"
       (keyup.enter)="capture()"
-      placeholder="What's on your mind? Capture it as a task…"
-    />
-    <button class="btn" (click)="capture()">Capture</button>
+      placeholder="Got any tasks to do?"
+      />
+    <button class="btn" (click)="capture()">Create</button>
   </div>
 
   <div class="stat-grid">
@@ -29,8 +29,12 @@
         Journal
       </p>
       <p class="value">{{ entryCount() }} {{ entryCount() === 1 ? 'entry' : 'entries' }}</p>
-      <p class="hint" *ngIf="lastEntry()">last one {{ lastEntry()!.createdAt | date: 'd MMM, h:mm a' }}</p>
-      <p class="hint" *ngIf="!lastEntry()">nothing written yet</p>
+      @if (lastEntry()) {
+        <p class="hint">last one {{ lastEntry()!.createdAt | date: 'd MMM, h:mm a' }}</p>
+      }
+      @if (!lastEntry()) {
+        <p class="hint">nothing written yet</p>
+      }
     </a>
 
     <a class="card stat" routerLink="/habit">
@@ -40,20 +44,28 @@
       </p>
       <p class="value">{{ habitsDoneToday() }} of {{ habits().length }}</p>
       <div class="dots">
-        <i *ngFor="let habit of habits()" [class.on]="isDoneToday(habit.completedDates)"></i>
+        @for (habit of habits(); track habit) {
+          <i [class.on]="isDoneToday(habit.completedDates)"></i>
+        }
       </div>
     </a>
   </div>
 
   <div class="card today-card">
     <h2>Up next</h2>
-    <div class="mini-task" *ngFor="let task of upNext()">
-      <span class="flag" [class.f-high]="task.priority === 'high'" [class.f-medium]="task.priority === 'medium'" [class.f-low]="task.priority === 'low'"></span>
-      {{ task.title }}
-      <span class="tag" *ngIf="task.group">{{ task.group }}</span>
-    </div>
-    <p class="empty" *ngIf="upNext().length === 0" style="padding: 4px 0">
-      Nothing waiting on you. Enjoy the quiet.
-    </p>
+    @for (task of upNext(); track task) {
+      <div class="mini-task">
+        <span class="flag" [class.f-high]="task.priority === 'high'" [class.f-medium]="task.priority === 'medium'" [class.f-low]="task.priority === 'low'"></span>
+        {{ task.title }}
+        @if (task.group) {
+          <span class="tag {{ task.group }}">{{ task.group | titlecase }}</span>
+        }
+      </div>
+    }
+    @if (upNext().length === 0) {
+      <p class="empty" style="padding: 4px 0">
+        Nothing waiting on you. Enjoy the quiet.
+      </p>
+    }
   </div>
 </section>
